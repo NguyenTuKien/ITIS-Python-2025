@@ -1,0 +1,4 @@
+Time,DeviceType,Consumption,State
+08:00,Light,20,Normal
+09:00,Light,-50,Normal
+10:00,Light,0,Normal

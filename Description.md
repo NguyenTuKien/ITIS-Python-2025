@@ -1,4 +1,4 @@
-# Flight Year Month
+# Flight_year_month
 
 Dữ liệu về chuyến bay được lưu trữ trong tệp "flights.json" có cấu trúc từ điển lồng nhau bao gồm:
 
@@ -301,7 +301,95 @@ Viết chương trình Python đọc file và in ra **trung bình độ dài cá
 | Adelie PhuQuoc | Invalid |
 
 -----
+# Smart_building 
 
+Bạn là quản lý kỹ thuật của một tòa nhà thông minh (Smart Building). Tòa nhà có nhiều tầng, mỗi tầng được lắp đặt các đồng hồ đo điện (Meter) để ghi nhận mức tiêu thụ của các thiết bị.
+
+Dữ liệu được gửi về server dưới dạng các file `.csv` trong thư mục hiện tại. Tên file tuân theo định dạng:
+`<tên_tầng>_<mã_đồng_hồ>.csv`
+
+**Ví dụ:** `tang1_M01.csv`, `tang2_M05.csv`, `tangG_M02.csv`.
+
+> Dữ liệu nằm trong thư mục `./Data/Smart_building/`
+
+Nội dung mỗi file gồm các dòng log (có dòng tiêu đề): `Time,DeviceType,Consumption,State`
+
+**Trong đó:**
+
+  * **Consumption:** Mức tiêu thụ điện (kWh).
+  * **State:** Trạng thái ghi nhận (Normal, Spike, Maintenance).
+
+### Dữ liệu cần được làm sạch trước khi tính toán:
+
+1.  **File lỗi:** File rỗng (0 byte) được coi là lỗi kết nối.
+2.  **Dữ liệu hợp lệ:**
+      * Chỉ chấp nhận các dòng có State là **"Normal"**.
+      * Bỏ qua các dòng có State là "Maintenance" (đang bảo trì) hoặc "Spike" (nhiễu đột biến).
+      * Consumption phải là số dương (\> 0). Nếu âm hoặc không phải số -\> Bỏ qua.
+
+### Nhiệm vụ
+
+Viết chương trình Python đọc tất cả các file hợp lệ và thực hiện thống kê:
+
+1.  **Kiểm tra file:** Số lượng file đọc thành công (có dữ liệu) và số file lỗi (rỗng).
+2.  **Điện năng tiêu thụ theo tầng:** Tính tổng lượng điện (Consumption) của từng tầng. In ra theo thứ tự alphabet tên tầng.
+3.  **Tổng điện năng tòa nhà:** Tổng lượng điện tiêu thụ của toàn bộ tòa nhà.
+4.  **Thiết bị "ngốn" điện nhất:** Tìm loại thiết bị (DeviceType) có **tổng mức tiêu thụ cộng dồn lớn nhất** trong toàn bộ hệ thống.
+
+### Định dạng đầu ra
+
+```text
+<số_file_thành_công> <số_file_lỗi>
+<tên_tầng_1> <tổng_điện>
+<tên_tầng_2> <tổng_điện>
+...
+total <tổng_điện_tòa_nhà>
+<loại_thiết_bị_max> <tổng_điện_của_nó>
+```
+
+*(Lưu ý: Kết quả tính toán là số nguyên)*
+
+### Input:
+
+**File: tang1\_M1.csv**
+
+```csv
+Time,DeviceType,Consumption,State
+08:00,Light,10,Normal
+09:00,AC,50,Normal
+10:00,Fan,5,Maintenance
+```
+
+**File: tang1\_M2.csv** (File rỗng)
+
+**File: tang2\_M3.csv**
+
+```csv
+Time,DeviceType,Consumption,State
+08:00,AC,60,Normal
+09:00,AC,-100,Normal
+10:00,Server,200,Spike
+```
+
+### Giải thích:
+
+  * **tang1\_M1:** Lấy 10 (Light) + 50 (AC) = 60. (Bỏ dòng Fan do Maintenance).
+  * **tang1\_M2:** Lỗi.
+  * **tang2\_M3:** Lấy 60 (AC). (Bỏ dòng -100, bỏ dòng Spike).
+
+### Output:
+
+```text
+2 1
+tang1 60
+tang2 60
+total 120
+AC 110
+```
+
+*(AC = 50 ở tầng 1 + 60 ở tầng 2 = 110)*
+
+-----
 # Tips1 (Thống kê theo giới tính và tình trạng hút thuốc)
 
 Tips là dữ liệu về tiền bo (tips) cho nhà hàng bao gồm danh sách các từ điển cho mỗi bàn bao gồm các trường:

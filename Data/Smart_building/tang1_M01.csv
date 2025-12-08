@@ -1,0 +1,4 @@
+Time,DeviceType,Consumption,State
+08:00,Light,10,Normal
+09:00,AC,50,Normal
+10:00,Fan,5,Normal

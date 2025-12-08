@@ -1,0 +1,4 @@
+Time,DeviceType,Consumption,State
+08:00,Server,100,Normal
+09:00,Server,500,Spike
+10:00,Fan,5,Maintenance
